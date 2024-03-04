@@ -1,4 +1,6 @@
 # Continuous Integration: CloudFlare DNZ Zone Importer
+:sweat_smile: **Work In Progress... This is not functional**
+> DISCLAIMER: The API curl requests in the Script Functions do not function.
 
 Yet another Cloudflare DNS record update tool
 
@@ -47,6 +49,7 @@ This tool is meant to be used in Git CI/CD Workflow to deploy and update DNS Zon
 This project welcomes and accepts contirbutions. Please follow the [Contribution Guide](CONTRIBUTING.md) and keep PR Titles short and well descriptive of your changes.
 
 ## :dart: Goals
+- Make this functional :bangbang:
 - Tests
   - Verify: Zone File Format
   - Verify: DNS Zone Files/Remote Provider are "in-sync"
