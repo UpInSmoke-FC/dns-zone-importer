@@ -1,4 +1,4 @@
-# Continous Integration: CloudFlare DNZ Zone Importer
+# Continuous Integration: CloudFlare DNZ Zone Importer
 
 Yet another Cloudflare DNS record update tool
 
