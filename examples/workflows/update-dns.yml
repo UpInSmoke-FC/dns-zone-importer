@@ -1,0 +1,80 @@
+name: Deploy DNS Updates via API Zone File Import
+on:
+  push:
+    branches:
+      - main
+
+env:
+  SRC_UPDATE_DNS: "https://github.com/UpInSmoke-FC/dns-zone-importer/blob/dev/import.sh"
+  SRC_WEBHOOK: "-b gitea https://github.com/FreedomCraft-Network/github-actions-discord-webhook.git"
+
+jobs:
+  check_files:
+    runs-on: 'ubuntu-20.04'
+    outputs:
+      zones_changed: ${{ steps.check_files.outputs.zones_changed }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - name: Check for Changed Files
+        shell: pwsh
+        id: check_file_changed
+        run: |
+          $files = Get-ChildItem -Path 'zones/' -Filter '*.txt'
+          foreach ($file in $files) {
+            $diff = git diff --name-only HEAD^ HEAD
+            $SourceDiff = $diff | Where-Object { $_ -match '^zones/' -or $_ -match '.txt$' }
+            $HasDiff = $SourceDiff.Length -gt 0
+            Write-Host "::set-output name=zones_changed::$HasDiff"
+          }
+          Write-Host "Check for Changed Files Complete"
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        if: ${{ !cancelled() }}
+        with:
+          ruby-version: '3.3'           
+      - name: Send Webhook Notification
+        if: ${{ !cancelled() }}
+        env:
+          JOB_STATUS: ${{ job.status }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          HOOK_OS_NAME: ${{ runner.os }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+        run: |
+          bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
+        shell: bash
+
+  sync_dns:  
+    runs-on: 'ubuntu-20.04'
+    needs: [ check_files ]
+    if: needs.check_files.outputs.zones_changed == 'True'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Update Zones
+        shell: bash
+        env:
+          API_KEY: ${{ secrets.CF_API_KEY }}
+          API_EMAIL: ${{ secrets.CF_API_KEY }}
+        run: |
+          wget ${{ env.SRC_UPDATE_DNS }}
+          bash import.sh ${{ needs.check_files.outputs.zones_changes }} $API_KEY $API_EMAIL
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        if: ${{ !cancelled() }}
+        with:
+          ruby-version: '3.3'           
+      - name: Send Webhook Notification
+        if: ${{ !cancelled() }}
+        env:
+          JOB_STATUS: ${{ job.status }}
+          WEBHOOK_URL: ${{ secrets.CF_WEBHOOK_URL }}
+          HOOK_OS_NAME: ${{ runner.os }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+        run: |
+          git clone ${{ env.SRC_WEBHOOK }} webhook
+          bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
+        shell: bash
