@@ -1,0 +1,46 @@
+;;
+;; Domain:     freedomcraft.lol.
+;; Exported:   2024-03-04 01:19:29
+;;
+;; This file is intended for use for informational and archival
+;; purposes ONLY and MUST be edited before use on a production
+;; DNS server.  In particular, you must:
+;;   -- update the SOA record with the correct authoritative name server
+;;   -- update the SOA record with the contact e-mail address information
+;;   -- update the NS record(s) with the authoritative name servers for this domain.
+;;
+;; For further information, please consult the BIND documentation
+;; located on the following website:
+;;
+;; http://www.isc.org/
+;;
+;; And RFC 1035:
+;;
+;; http://www.ietf.org/rfc/rfc1035.txt
+;;
+;; Please note that we do NOT offer technical support for any use
+;; of this zone data, the BIND name server, or any other third-party
+;; DNS software.
+;;
+;; Use at your own risk.
+;; SOA Record
+freedomcraft.lol	3600	IN	SOA	jen.ns.cloudflare.com. dns.cloudflare.com. 2046118176 10000 2400 604800 3600
+
+;; NS Records
+freedomcraft.lol.	86400	IN	NS	jen.ns.cloudflare.com.
+freedomcraft.lol.	86400	IN	NS	piers.ns.cloudflare.com.
+
+;; A Records
+a.freedomcraft.lol.	1	IN	A	127.0.0.1
+
+;; CNAME Records
+cname.freedomcraft.lol.	1	IN	CNAME	a.freedomcraft.lol.
+
+;; MX Records
+mx.freedomcraft.lol.	1	IN	MX	0 a.freedomcraft.lol.
+
+;; SRV Records
+_minecraft._tcp.srv.freedomcraft.lol.	1	IN	SRV	0 0 25565 a.freedomcraft.lol.
+
+;; TXT Records
+txt.freedomcraft.lol.	1	IN	TXT	"a.freedomcraft.lol"
