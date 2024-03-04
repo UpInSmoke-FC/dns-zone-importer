@@ -44,7 +44,7 @@ This tool is meant to be used in Git CI/CD Workflow to deploy and update DNS Zon
 
 ## :repeat: Contributions 
 
-This project welcomes and accepts contirbutions. Please follow the [Contribution Guide]() and keep PR Titles short and well descriptive of your changes.
+This project welcomes and accepts contirbutions. Please follow the [Contribution Guide](CONTRIBUTING.md) and keep PR Titles short and well descriptive of your changes.
 
 ## :dart: Goals
 - Tests

@@ -24,10 +24,10 @@ function IMPORT () {
 # get the zone ID of a zone / domain
 function GETZONEID() {
   curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=$1" \
-	--header "X-Auth-Key: $2" \
-  --header "X-Auth-Email: $3" \
-	--header "Content-Type: application/json" \
-	| jq .result[].id -r
+	  --header "X-Auth-Key: $2" \
+    --header "X-Auth-Email: $3" \
+	  --header "Content-Type: application/json" \
+	  | jq .result[].id -r
 }
 
 # Loop over each file and call the functions
