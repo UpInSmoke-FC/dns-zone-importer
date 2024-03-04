@@ -15,8 +15,7 @@ AVATAR="https://github.com/actions.png"
 function IMPORT () {
   curl --request POST \
     --url https://api.cloudflare.com/client/v4/zones/$1/dns_records/import \
-    --header "X-Auth-Key: $2" \
-    --header "X-Auth-Email: $3" \
+    --header "X-Auth-Key: $2" --header "X-Auth-Email: $3" \
     --header "Content-Type: application/json" \
     --form 'file=@'"$4"''
 }
