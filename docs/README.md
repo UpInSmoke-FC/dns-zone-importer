@@ -35,7 +35,7 @@ This tool is meant to be used in Git CI/CD Workflow to deploy and update DNS Zon
 1. Add API Token & Email to [Repository Secrets](#repository-secrets--variables)
 1. Add Workflow to Repository
 1. Add Zone File(s) from Step 2 above to `/zones/*`
-1. Verify Workflow Runs & DNS Depployment
+1. Verify Workflow Runs & DNS Deployment
 
 #### Repository Secrets & Variables
 - Github - [Guide](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions)
